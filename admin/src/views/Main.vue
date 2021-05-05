@@ -95,11 +95,27 @@ export default {
   //监控data中的数据变化
   watch: {},
   //方法集合
-  methods: {},
+  methods: {
+    async fetch() {
+      await this.$http.get("rest/items");
+    },
+  },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
+  mounted() {
+    // 还可以用全局导航守卫来做验证
+    if(!localStorage.token) {
+      this.$message({
+        type: 'error',
+        duration: 1200,
+        message: '请先登录'
+      })
+      this.$router.push('/login')
+    } else {
+      this.fetch()
+    }
+  },
   //生命周期 - 更新之前
   updated() {},
   //生命周期 - 销毁完成

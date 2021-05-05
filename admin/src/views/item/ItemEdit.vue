@@ -10,6 +10,7 @@
         <el-upload
           class="icon-uploader"
           :action="$http.defaults.baseURL + '/uploads'"
+          :headers="getAuthHeadersMixin()"
           :show-file-list="false"
           :on-success="afterUpload"
         >

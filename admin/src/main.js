@@ -3,11 +3,21 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './plugins/element.js'
-import http from '../http'
+import http from './http'
 
 Vue.prototype.$http = http
 
 Vue.config.productionTip = false
+
+Vue.mixin({
+  methods: {
+    getAuthHeadersMixin() {
+      return {
+        Authorization: `Bearer ${localStorage.token || ''}`
+      }
+    }
+  }
+})
 
 new Vue({
   router,

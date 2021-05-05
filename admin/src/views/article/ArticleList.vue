@@ -39,12 +39,12 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    // 获取分类数据并显示
+    // 获取文章数据并显示
     async fetch() {
       const res = await this.$http.get("rest/articles");
       this.items = res.data;
     },
-    // 删除某个分类
+    // 删除某篇文章
     async remove(row) {
       this.$confirm(`是否确定删除文章《${row.title}》`, "提示", {
         confirmButtonText: "确定",

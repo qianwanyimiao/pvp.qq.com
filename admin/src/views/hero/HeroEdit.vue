@@ -8,7 +8,8 @@
           <el-form-item label="头像">
             <el-upload
               class="avatar-uploader"
-              :action="$http.defaults.baseURL + '/uploads/heroes'"
+              :action="$http.defaults.baseURL + '/uploads'"
+              :headers="getAuthHeadersMixin()"
               :show-file-list="false"
               :on-success="afterUpload"
             >
@@ -112,6 +113,7 @@
                 <el-upload
                   class="avatar-uploader"
                   :action="$http.defaults.baseURL + '/uploads'"
+                  :headers="getAuthHeadersMixin()"
                   :show-file-list="false"
                   :on-success="(res) => $set(item, 'icon', res.url)"
                 >

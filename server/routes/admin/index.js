@@ -42,31 +42,24 @@ module.exports = app => {
     })
   })
   // 在请求接口之前，判断用户是否授权
-  app.use(async (req, res, next) => {
-    const token = String(req.headers.authorization || '').split(' ').pop()
-    const { id } = jwt.verify(token, app.get('secret'))
-    req.user = await AdminUser.findById(id)
-    next()
-  })
+  const auth = require('../../middleware/auth') // 返回的函数执行之后才是中间件函数
+
   // 创建了一个通用CURD接口（rest表示这是一个rest风格的接口）
   // 第一个中间件是用来将resource的小写复数格式转换成大写开头的Model文件格式
-  app.use('/admin/api/rest/:resource', (req, res, next) => {
-    const modelName = require('inflection').classify(req.params.resource)
-    // 将model挂载到req上后面的router才能访问到
-    req.Model = require(`../../models/${modelName}`)
-    next()
-  }, router)
+  const resourceMiddleware = require('../../middleware/resource')
+  // 挂载路由和授权，resource中间件
+  app.use('/admin/api/rest/:resource', auth(), resourceMiddleware(), router)
 
   const multer = require('multer')
   // 上传图片
   const upload = multer({dest: __dirname + '/../../uploads'})
-  app.post('/admin/api/uploads', upload.single('file'), async (req, res) => {
+  app.post('/admin/api/uploads', auth(), upload.single('file'), async (req, res) => {
     const file = req.file
     file.url = `http://localhost:3000/uploads/${file.filename}`
     res.send(file)
   })
   
-  app.post('/admin/api/login', async (req, res) => {
+  app.post('/admin/api/login' ,async (req, res) => {
     let {username, password} = req.body
     // 1.根据用户名找用户
     const user = await AdminUser.findOne({
@@ -76,13 +69,13 @@ module.exports = app => {
     // 2.校验密码
     const isValid = require('bcryptjs').compareSync(password, user.password)
     assert(isValid, 422, '账号或密码错误')
-   
     // 3.返回token
     
     // 根据用户id生成token（token密钥从全局获取）
     // 这里的get参数只能有一个，因为和路由的定义是冲突的，所以只能通过
     // 参数来区别
-    const token = jwt.sign({id: user._id}, app.get('secret'))
+    // 设置过期时间为1天
+    const token = jwt.sign({id: user._id}, app.get('secret'), {expiresIn: 3600 * 24 * 7})
     res.send({token})
   })
 

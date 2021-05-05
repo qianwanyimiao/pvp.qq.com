@@ -28,7 +28,11 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    // 可以判断这个属性来进行授权验证
+    meta: {
+      isPublic: true
+    }
   },
   {
     path: '/',
