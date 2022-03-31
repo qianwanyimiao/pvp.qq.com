@@ -1,0 +1,96 @@
+// color
+$colors: (
+  "primary": #db9e3f,
+  "white": #fff,
+  "light": #f9f9f9,
+  "light-1": #d4d9de,
+  "grey": #999,
+  "grey-1": #666,
+  "info": #4b67af,
+  "dark-1": #343440,
+  "dark": #212222,
+  "black": #000,
+  "blue": #4394e4,
+  "blue-1": #1f3695,
+  "danger": #791a15,
+);
+
+$border-color: map-get($colors, "light-1");
+
+// font-size
+$base-font-size: 1rem;
+$font-sizes: (
+  xxs: 0.6154,
+  xs: 0.7692,
+  sm: 0.9231,
+  md: 1,
+  lg: 1.0769,
+  xl: 1.2308,
+);
+
+// 宽度，高度相关样式
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+// flex布局justify-content
+$flex-jc: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around,
+);
+
+// flex布局align-items
+$flex-ai: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around,
+);
+
+// 边距样式
+$spacing-types: (
+  m: margin,
+  p: padding,
+);
+
+$spacing-directions: (
+  t: top,
+  r: right,
+  l: left,
+  b: bottom,
+);
+
+$spacing-base-size: 1rem;
+
+$spacing-sizes: (
+  0: 0,
+  1: 0.25,
+  2: 0.5,
+  3: 1,
+  4: 1.5,
+  5: 3,
+);

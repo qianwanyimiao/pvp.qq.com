@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <el-container style="height: 100vh;">
+    <el-container style="height: 100vh">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
         <!-- default-openeds表示默认打开哪个子菜单，default-active表示根据路由高亮菜单颜色 -->
         <el-menu router :default-openeds="['3']" :default-active="$route.path">
@@ -45,11 +45,12 @@
             </el-menu-item-group>
             <el-menu-item-group>
               <template slot="title">管理员</template>
-              <el-menu-item index="/admin_users/create">新建管理员</el-menu-item>
+              <el-menu-item index="/admin_users/create"
+                >新建管理员</el-menu-item
+              >
               <el-menu-item index="/admin_users/list">管理员列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          
         </el-menu>
       </el-aside>
 
@@ -67,7 +68,7 @@
         </el-header>
 
         <el-main>
-          <router-view></router-view>
+          <router-view :key="$route.path"></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -105,15 +106,15 @@ export default {
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     // 还可以用全局导航守卫来做验证
-    if(!localStorage.token) {
+    if (!localStorage.token) {
       this.$message({
-        type: 'error',
+        type: "error",
         duration: 1200,
-        message: '请先登录'
-      })
-      this.$router.push('/login')
+        message: "请先登录",
+      });
+      this.$router.push("/login");
     } else {
-      this.fetch()
+      this.fetch();
     }
   },
   //生命周期 - 更新之前
